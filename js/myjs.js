@@ -13,6 +13,8 @@ $(document).ready(function() {
             dataType: 'json',
             // crossDomain: 'true',
             // isLocal: 'true',
+
+            // TODO: REFACTOR THIS
             success: function(data) {
                 console.log(data);
                 
