@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en-GB">
 <head>
+    <meta charset="UTF-8">
     <title>IWT CW1 - Ginestra Ferraro</title>
     <link rel="stylesheet" type="text/css" href="css/style.css">
 
@@ -32,11 +33,11 @@
                     <input type="text" value="" placeholder="Start typing...">
                 </p>
 
-                <button class="submit" type="button">Search</button>
+                <button class="submit" type="button" id="trigger-results">Search</button>
             </form>
         </div>
 
-        <div class="results">
+        <div id="results">
             <h2>Results</h2>
 
             <table id="result-list">
@@ -76,6 +77,9 @@
                 </tbody>
             </table>
         </div>
+
+        <ul class="names">
+        </ul>
     </div>
 </body>
 </html>
