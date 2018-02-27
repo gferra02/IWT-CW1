@@ -11,10 +11,10 @@ The product of the coursework should be an HTML page which a user can use to que
 
 Create a web page which will allow a user to query the data as follows:
 
-1. The user should be able to enter a category value (e.g. literature) and retrieve the corresponding prize winners.
-2. The user should be able to enter a year value (e.g. 1991) as well as an operator (<, = or >) and retrieve the prize winners for the years specified.
-3. The user should be able to enter a share value (e.g. 2) as well as an operator (<, = or >) and retrieve the prize winners who shared the prize among the number of people specified by the condition.
-4. The user should be able to enter part of a surname value (e.g. Curie) and retrieve the corresponding prize winners.
+1. The user should be able to enter a `category` value (e.g. literature) and retrieve the corresponding prize winners.
+2. The user should be able to enter a `year` value (e.g. 1991) as well as an operator (<, = or >) and retrieve the prize winners for the years specified.
+3. The user should be able to enter a `share` value (e.g. 2) as well as an operator (<, = or >) and retrieve the prize winners who shared the prize among the number of people specified by the condition.
+4. The user should be able to enter part of a `surname` value (e.g. Curie) and retrieve the corresponding prize winners.
 5. The user should be able to enter conditions for any combination of the properties mentioned above. If no conditions are entered, all prizes and winners should be returned.
 
 You will need to use a form on the page you create. The form will contain text boxes for user input, possibly drop-down lists for operator selection, and a button to retrieve the corresponding results. A fancy interface is not expected. You can separate the input region from the output region on the page by using a div element to hold the output. The output should comprise an HTML table, with column headers Year, Category, First name and Surname. The idea is that you should use JavaScript (and the JSON file) to output the rows of prize winners that satisfy the user's query.

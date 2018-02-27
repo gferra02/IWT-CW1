@@ -1,0 +1,45 @@
+/*
+ * CSS stylesheet for CW1
+ * Author: Ginestra Ferraro
+ */
+
+/* Globals */
+
+body {
+    color: #222;
+    font-family: "Helvetica Neue", sans-serif;
+    font-size: 16px; /* Base font-size */
+    margin: 0;
+    padding: 0;
+}
+
+div {
+    margin: 0 auto;
+    max-width: 60rem; /* 960px */
+    padding: 1rem 2rem;
+}
+
+p {
+    font-family: "Times New Roman", serif;
+    font-size: 1.25rem;
+    line-height: 1.5;
+}
+
+.wrapper {
+    background: #f8f8f8;
+}
+
+/* Headings */
+
+h1, h2, h3, h4, h5, h6 {
+    color: #666;
+}
+
+h1, h2 {
+    font-weight: 400;
+}
+
+h1 small {
+    color: #999;
+    font-size: .75em;
+}
