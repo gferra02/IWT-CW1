@@ -6,17 +6,38 @@
 /* Globals */
 
 body {
-    color: #222;
+    color: #222d33;
     font-family: "Helvetica Neue", sans-serif;
     font-size: 16px; /* Base font-size */
     margin: 0;
     padding: 0;
 }
 
-div {
-    margin: 0 auto;
-    max-width: 60rem; /* 960px */
-    padding: 1rem 2rem;
+button {
+    background: #7ca5b8;
+    color: #fff;
+    cursor: pointer;
+}
+
+button:hover {
+    background: #445a65;
+}
+
+button,
+input {
+    border: 0;
+    font-size: 1rem;
+    height: 2rem;
+    padding: 0 .5rem;
+}
+
+form {
+    line-height: 2;
+}
+
+form p {
+    font-family: "Helvetica Neue", sans-serif;
+    font-size: 1rem;
 }
 
 p {
@@ -25,14 +46,49 @@ p {
     line-height: 1.5;
 }
 
+table {
+    border: 0;
+    line-height: 1.25;
+    width: 100%;
+}
+
+table ul {
+    line-height: 1.25;
+    margin: 0;
+    min-width: 200px;
+}
+
+th, td {
+    padding: 8px 16px;
+    vertical-align: top;
+}
+
+thead th {
+    background: #445a65;
+    color: #fff;
+    font-weight: 400;
+}
+
+tr:nth-child(even) {
+    background: #fff;
+}
+
+ul, ol {
+    line-height: 2;
+    padding-left: 1.25rem;
+}
+
 .wrapper {
-    background: #f8f8f8;
+    background: #f3f6f8;
+    margin: 0 auto;
+    max-width: 60rem; /* 960px */
+    padding: 1rem 2rem;
 }
 
 /* Headings */
 
 h1, h2, h3, h4, h5, h6 {
-    color: #666;
+    color: #7ca5b8;
 }
 
 h1, h2 {
@@ -40,6 +96,10 @@ h1, h2 {
 }
 
 h1 small {
-    color: #999;
+    color: #93b5c4;
     font-size: .75em;
+}
+
+h2 {
+    border-bottom: 1px solid #c3d6de;
 }
