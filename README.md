@@ -13,7 +13,7 @@ Create a web page which will allow a user to query the data as follows:
 
 1. The user should be able to enter a `category` value (e.g. literature) and retrieve the corresponding prize winners.
 2. The user should be able to enter a `year` value (e.g. 1991) as well as an operator (<, = or >) and retrieve the prize winners for the years specified.
-3. The user should be able to enter a `share` value (e.g. 2) as well as an operator (<, = or >) and retrieve the prize winners who shared the prize among the number of people specified by the condition.
+3. The user should be able to enter a share value (e.g. 2) as well as an operator (<, = or >) and retrieve the prize winners whose share value is specified by the condition.
 4. The user should be able to enter part of a `surname` value (e.g. Curie) and retrieve the corresponding prize winners.
 5. The user should be able to enter conditions for any combination of the properties mentioned above. If no conditions are entered, all prizes and winners should be returned.
 

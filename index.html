@@ -29,8 +29,32 @@
             <h2>Search</h2>
             <form>
                 <p>
-                    <label>Category:</label>
-                    <input type="text" value="" placeholder="Start typing...">
+                    <label>Category</label>
+                    <input id="category" type="text" value="" placeholder="Start typing...">
+                </p>
+                <p>
+                    <label>Year</label>
+                    <select>
+                        <option></option>
+                        <option value="<">&lt; (less than)</option>
+                        <option value="=">= (equal to)</option>
+                        <option value=">">&gt; (greater than)</option>
+                    </select> 
+                    <input id="year" type="text" value="" placeholder="Type a year...">
+                </p>
+                <p>
+                    <label>Prize share</label>
+                    <select>
+                        <option></option>
+                        <option value="<">&lt; (less than)</option>
+                        <option value="=">= (equal to)</option>
+                        <option value=">">&gt; (greater than)</option>
+                    </select> 
+                    <input id="share" type="text" value="" placeholder="Share...">
+                </p>
+                <p>
+                    <label>Surname (whole or partial)</label>
+                    <input id="surname" type="text" value="" placeholder="Surname...">
                 </p>
 
                 <button class="submit" type="button" id="trigger-results">Search</button>

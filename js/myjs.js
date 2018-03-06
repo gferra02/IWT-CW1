@@ -14,7 +14,7 @@ $(document).ready(function() {
 
             // TODO: REFACTOR THIS
             success: function(data) {
-                console.log(data); // checking the array in the console
+                //console.log(data); // checking the array in the console
 
                 
                 $('#result-list').html('<thead><tr><th>Category</th>' +
@@ -33,7 +33,9 @@ $(document).ready(function() {
                                        '<th>Year</th><th>Name(s)</th>' +
                                        '<th>Motivation</th></tr></thead><tbody>');
 
-                // Get all results if the query is empty
+                // Get all results if every field is empty
+                // I'm checking for input type and missing select
+                // UPDATE 6/3/18: it has stopped working and can't figure out why
                 var inputs = document.getElementsByTagName('input');
                 for (var i = 0; i < inputs.length; i++) {
                     if(inputs[i].value == ""){
