@@ -21,37 +21,55 @@ $(document).ready(function() {
                                        '<th>Year</th><th>Name(s)</th>' +
                                        '<th>Motivation</th></tr></thead><tbody>');
 
-                // Experimenting with JSPath
-                // $.each(data.prizes, function(k, v) {
-                //     $('#result-list').append('<tr><td>' +
-                //         JSPath.apply('.prizes..firstname', data)
-                //         + '</td></tr>');
-                // });
-                
-                // Start displaying the table for results
-                $('#result-list').html('<thead><tr><th>Category</th>' +
-                                       '<th>Year</th><th>Name(s)</th>' +
-                                       '<th>Motivation</th></tr></thead><tbody>');
 
-                // Get all results if every field is empty
-                // I'm checking for input type and missing select
-                // UPDATE 6/3/18: it has stopped working and can't figure out why
-                var inputs = document.getElementsByTagName('input');
-                for (var i = 0; i < inputs.length; i++) {
-                    if(inputs[i].value == ""){
-                        
-                        $.each(data.prizes, function(k, v) {
-                            var firstLevelArray = this;
+                /*
+                // TODO: refine, but KEEP, it works
+                // Experimenting with JSPath for filtering
+                var arrayOfResults = JSPath.apply('.prizes..firstname', data);
 
-                            $.each(v.laureates, function(subk, subv) {
-                                console.log(subv)
-                                $('#result-list').append('<tr><td>' + firstLevelArray.category +
-                                    '</td><td>' + firstLevelArray.year + '</td><td>' +
-                                    subv.firstname + ' ' + subv.surname +
-                                    '</td><td>' + subv.motivation + '</td></tr>');
-                            });
+                // console.log(arrayOfResults.length);
+                // console.log(arrayOfResults[1]);
+
+                for (i = 0; i < arrayOfResults.length; i++) {
+                    console.log('test' + [i]);
+                    $('#result-list').append(
+                        '<tr><td>' +
+                        arrayOfResults[i] +
+                        '</td></tr>');
+                }
+                */
+
+                // Get all results if *every* field is empty
+
+                /*
+                    if empty,
+                    check next,
+                    until last
+                    and if last is empty,
+                    print all results
+
+                    Recursion?
+                */
+
+                var isEmpty = true;
+
+                console.log(isEmpty);
+
+                if (isEmpty) {
+
+                    console.log(isEmpty);
+
+                    $.each(data.prizes, function(k, v) {
+                        var firstLevelArray = this;
+
+                        $.each(v.laureates, function(subk, subv) {
+                            // console.log(subv)
+                            $('#result-list').append('<tr><td>' + firstLevelArray.category +
+                                '</td><td>' + firstLevelArray.year + '</td><td>' +
+                                subv.firstname + ' ' + subv.surname +
+                                '</td><td>' + subv.motivation + '</td></tr>');
                         });
-                    }
+                    });
                 }
 
                 // Close the table
@@ -59,4 +77,11 @@ $(document).ready(function() {
             }
         });
     });
+
+    function isEmpty(obj) {
+        if($('input:empty')) {
+            return true;
+        }
+        return false;
+    }
 });
