@@ -15,8 +15,8 @@ $(document).ready(function() {
             // TODO: REFACTOR THIS
             success: function(data) {                
                 $('#result-list').html('<thead><tr><th>Category</th>' +
-                                       '<th>Year</th><th>Name(s)</th>' +
-                                       '<th>Motivation</th></tr></thead><tbody>');
+                                       '<th>Year</th><th>Firstname(s)</th>' +
+                                       '<th>Surname(s)</th></tr></thead><tbody>');
 
                 /*
                 // TODO: refine, but KEEP, it works
@@ -58,8 +58,8 @@ $(document).ready(function() {
                             $('#result-list').append('<tr><td>' +
                                 firstLevelArray.category + '</td><td>' +
                                 firstLevelArray.year + '</td><td>' +
-                                subv.firstname + ' ' + subv.surname + '</td><td>' + 
-                                subv.motivation + '</td></tr>');
+                                subv.firstname + '</td><td>' + 
+                                subv.surname + '</td></tr>');
                         });
                     });
                 } else {
@@ -79,8 +79,8 @@ $(document).ready(function() {
                                     $('#result-list').append('<tr><td>' +
                                         firstLevelArray.category + '</td><td>' +
                                         firstLevelArray.year + '</td><td>' +
-                                        subv.firstname + ' ' + subv.surname + '</td><td>' + 
-                                        subv.motivation + '</td></tr>');
+                                        subv.firstname + '</td><td>' + 
+                                        subv.surname + '</td></tr>');
                                 });
                             }
                         });
@@ -95,16 +95,28 @@ $(document).ready(function() {
                         // in the html form
                         var userYear = $('#year').val();
 
+                        var userYearOperator = $('select#year-range option:selected').val();
+
                         $.each(data.prizes, function(k, v) {
                             var firstLevelArray = this;
 
-                            if (firstLevelArray.year === userYear) {
+                            if (firstLevelArray.year === userYear && 
+                                (userYearOperator === "" || userYearOperator === "=")) {
                                 $.each(v.laureates, function(subk, subv) {
                                     $('#result-list').append('<tr><td>' +
                                         firstLevelArray.category + '</td><td>' +
                                         firstLevelArray.year + '</td><td>' +
-                                        subv.firstname + ' ' + subv.surname + '</td><td>' + 
-                                        subv.motivation + '</td></tr>');
+                                        subv.firstname + '</td><td>' +
+                                        subv.surname + '</td></tr>');
+                                });
+                            } else if (firstLevelArray.year > userYear &&
+                                userYearOperator === ">") {
+                                $.each(v.laureates, function(subk, subv) {
+                                    $('#result-list').append('<tr><td>' +
+                                        firstLevelArray.category + '</td><td>' +
+                                        firstLevelArray.year + '</td><td>' +
+                                        subv.firstname + '</td><td>' +
+                                        subv.surname + '</td></tr>');
                                 });
                             }
                         });
@@ -117,6 +129,7 @@ $(document).ready(function() {
         });
     });
 
+    // Basic function to check for empty value in fields
     function isEmpty(obj) {
         if(obj.value != '') {
             return false;

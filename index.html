@@ -34,7 +34,7 @@
                 </p>
                 <p>
                     <label>Year</label>
-                    <select>
+                    <select id="year-range">
                         <option></option>
                         <option value="<">&lt; (less than)</option>
                         <option value="=">= (equal to)</option>
@@ -44,13 +44,13 @@
                 </p>
                 <p>
                     <label>Prize share</label>
-                    <select>
+                    <select id="share-range">
                         <option></option>
                         <option value="<">&lt; (less than)</option>
                         <option value="=">= (equal to)</option>
                         <option value=">">&gt; (greater than)</option>
                     </select> 
-                    <input id="share" type="number" value="" placeholder="Eg. '2'">
+                    <input id="share" type="number" value="" min="1" max="4" placeholder="Eg. '2'">
                 </p>
                 <p>
                     <label>Surname (whole or partial)</label>
