@@ -67,17 +67,38 @@ $(document).ready(function() {
                     // literature) and retrieve the corresponding prize winners.
 
                     if (!isEmpty($('#category'))) {
-                        console.log($('#category').val());
-
-                        // Getting user input, converting to lower case to be
-                        // case insensitive
-                        var userInput = $('#category').val().toLowerCase();
-                        console.log(userInput);
+                        // Getting user input, converting it to lower case to
+                        // match lower and upper case
+                        var userCategory = $('#category').val().toLowerCase();
 
                         $.each(data.prizes, function(k, v) {
                             var firstLevelArray = this;
 
-                            if (firstLevelArray.category === userInput) {
+                            if (firstLevelArray.category === userCategory) {
+                                $.each(v.laureates, function(subk, subv) {
+                                    $('#result-list').append('<tr><td>' +
+                                        firstLevelArray.category + '</td><td>' +
+                                        firstLevelArray.year + '</td><td>' +
+                                        subv.firstname + ' ' + subv.surname + '</td><td>' + 
+                                        subv.motivation + '</td></tr>');
+                                });
+                            }
+                        });
+                    }
+
+                    // 2) The user should be able to enter a year value (e.g.
+                    // 1991) as well as an operator (<, = or >) and retrieve the
+                    // prize winners for the years specified.
+                    if (!isEmpty($('#year'))) {
+                        // Getting user input.
+                        // Won't check for range nor type, since already doing it
+                        // in the html form
+                        var userYear = $('#year').val();
+
+                        $.each(data.prizes, function(k, v) {
+                            var firstLevelArray = this;
+
+                            if (firstLevelArray.year === userYear) {
                                 $.each(v.laureates, function(subk, subv) {
                                     $('#result-list').append('<tr><td>' +
                                         firstLevelArray.category + '</td><td>' +
