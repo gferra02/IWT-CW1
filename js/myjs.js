@@ -43,10 +43,13 @@ $(document).ready(function() {
                 // Check all input fields and setting the empty flag to false if
                 // any input field is not empty
                 $.each(inputs, function(k, v) {
-                    if (v.value != '') {
+                    if (!isEmpty(v)) {
                         empty = false;
                     }
                 });
+
+                // checking the flag changes accordingly
+                // console.log(empty);
 
                 // Finally retrieving all results if all input fields are empty
                 if (empty) {
@@ -71,19 +74,7 @@ $(document).ready(function() {
                         // match lower and upper case
                         var userCategory = $('#category').val().toLowerCase();
 
-                        $.each(data.prizes, function(k, v) {
-                            var firstLevelArray = this;
-
-                            if (firstLevelArray.category === userCategory) {
-                                $.each(v.laureates, function(subk, subv) {
-                                    $('#result-list').append('<tr><td>' +
-                                        firstLevelArray.category + '</td><td>' +
-                                        firstLevelArray.year + '</td><td>' +
-                                        subv.firstname + '</td><td>' + 
-                                        subv.surname + '</td></tr>');
-                                });
-                            }
-                        });
+                        filteredResults(userCategory, 'category');
                     }
 
                     // 2) The user should be able to enter a year value (e.g.
@@ -97,34 +88,41 @@ $(document).ready(function() {
 
                         var userYearOperator = $('select#year-range option:selected').val();
 
-                        $.each(data.prizes, function(k, v) {
-                            var firstLevelArray = this;
-
-                            if (firstLevelArray.year === userYear && 
-                                (userYearOperator === "" || userYearOperator === "=")) {
-                                $.each(v.laureates, function(subk, subv) {
-                                    $('#result-list').append('<tr><td>' +
-                                        firstLevelArray.category + '</td><td>' +
-                                        firstLevelArray.year + '</td><td>' +
-                                        subv.firstname + '</td><td>' +
-                                        subv.surname + '</td></tr>');
-                                });
-                            } else if (firstLevelArray.year > userYear &&
-                                userYearOperator === ">") {
-                                $.each(v.laureates, function(subk, subv) {
-                                    $('#result-list').append('<tr><td>' +
-                                        firstLevelArray.category + '</td><td>' +
-                                        firstLevelArray.year + '</td><td>' +
-                                        subv.firstname + '</td><td>' +
-                                        subv.surname + '</td></tr>');
-                                });
-                            }
-                        });
+                        if (userYearOperator === '' || userYearOperator === '=') {
+                            filteredResults(userYear, 'year');
+                        } 
+                        // else if (firstLevelArray.year > userYear &&
+                        //         userYearOperator === ">") {
+                        //         $.each(v.laureates, function(subk, subv) {
+                        //             $('#result-list').append('<tr><td>' +
+                        //                 firstLevelArray.category + '</td><td>' +
+                        //                 firstLevelArray.year + '</td><td>' +
+                        //                 subv.firstname + '</td><td>' +
+                        //                 subv.surname + '</td></tr>');
+                        //         });
+                        //     }
                     }
                 }
 
                 // Close the table
                 $('#result-list').append('</tbody>');
+
+                // Function to retrieve results
+                function filteredResults(userInput, jsonObj) {
+                    $.each(data.prizes, function(k, v) {
+                        var firstLevelArray = this;
+
+                        if (firstLevelArray[jsonObj] === userInput) {
+                            $.each(v.laureates, function(subk, subv) {
+                                $('#result-list').append('<tr><td>' +
+                                    firstLevelArray.category + '</td><td>' +
+                                    firstLevelArray.year + '</td><td>' +
+                                    subv.firstname + '</td><td>' + 
+                                    subv.surname + '</td></tr>');
+                            });
+                        }
+                    });
+                }
             }
         });
     });
