@@ -36,18 +36,20 @@ $(document).ready(function() {
                 }
                 */
 
-                // Get all results only if *every* field is empty
-
+                // Get all results only if *every* input field is empty
+                // Setting empty to true since initially all fields will be blank
                 var empty = true;
                 var inputs = document.getElementsByTagName('input');
 
-                // Check all input fields
+                // Check all input fields and setting the empty flag to false if
+                // any input field is not empty
                 $.each(inputs, function(k, v) {
                     if (v.value != '') {
                         empty = false;
                     }
                 });
 
+                // Finally retrieving all results if all input fields are empty
                 if (empty) {
 
                     $.each(data.prizes, function(k, v) {
@@ -60,6 +62,31 @@ $(document).ready(function() {
                                 '</td><td>' + subv.motivation + '</td></tr>');
                         });
                     });
+                } else {
+                    // 1) The user should be able to enter a category value (e.g.
+                    // literature) and retrieve the corresponding prize winners.
+
+                    if (!isEmpty($('#category'))) {
+                        console.log($('#category').val());
+
+                        var userInput = $('#category').val();
+                        var arrayOfCategories = JSPath.apply('.prizes.category', data);
+
+                        for (i = 0; i < arrayOfCategories.length; i++) {
+                            if (userInput === arrayOfCategories[i]) {
+                                // List all winners in that category
+                                var path = '.prizes{.category == $userInput}.year';
+
+                                var arrayOfWinners = JSPath.apply(path, data, { category: userInput });
+
+                                $('#result-list').append(
+                                    '<tr><td>' + arrayOfCategories[i] +
+                                    '</td><td>' + arrayOfWinners[0] +
+                                    '</td><td>' + arrayOfWinners + '</td><td>' + 
+                                    '</td></tr>');
+                            }
+                        }
+                    }
                 }
 
                 // Close the table
@@ -67,4 +94,12 @@ $(document).ready(function() {
             }
         });
     });
+
+    function isEmpty(obj) {
+        if(obj.value != '') {
+            return false;
+        }
+
+        return true;
+    }
 });
