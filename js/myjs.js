@@ -13,10 +13,7 @@ $(document).ready(function() {
             dataType: 'json',
 
             // TODO: REFACTOR THIS
-            success: function(data) {
-                //console.log(data); // checking the array in the console
-
-                
+            success: function(data) {                
                 $('#result-list').html('<thead><tr><th>Category</th>' +
                                        '<th>Year</th><th>Name(s)</th>' +
                                        '<th>Motivation</th></tr></thead><tbody>');
@@ -39,31 +36,24 @@ $(document).ready(function() {
                 }
                 */
 
-                // Get all results if *every* field is empty
+                // Get all results only if *every* field is empty
 
-                /*
-                    if empty,
-                    check next,
-                    until last
-                    and if last is empty,
-                    print all results
+                var empty = true;
+                var inputs = document.getElementsByTagName('input');
 
-                    Recursion?
-                */
+                // Check all input fields
+                $.each(inputs, function(k, v) {
+                    if (v.value != '') {
+                        empty = false;
+                    }
+                });
 
-                var isEmpty = true;
-
-                console.log(isEmpty);
-
-                if (isEmpty) {
-
-                    console.log(isEmpty);
+                if (empty) {
 
                     $.each(data.prizes, function(k, v) {
                         var firstLevelArray = this;
 
                         $.each(v.laureates, function(subk, subv) {
-                            // console.log(subv)
                             $('#result-list').append('<tr><td>' + firstLevelArray.category +
                                 '</td><td>' + firstLevelArray.year + '</td><td>' +
                                 subv.firstname + ' ' + subv.surname +
@@ -77,11 +67,4 @@ $(document).ready(function() {
             }
         });
     });
-
-    function isEmpty(obj) {
-        if($('input:empty')) {
-            return true;
-        }
-        return false;
-    }
 });
