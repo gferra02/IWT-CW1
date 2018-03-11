@@ -18,7 +18,6 @@ $(document).ready(function() {
                                        '<th>Year</th><th>Name(s)</th>' +
                                        '<th>Motivation</th></tr></thead><tbody>');
 
-
                 /*
                 // TODO: refine, but KEEP, it works
                 // Experimenting with JSPath for filtering
@@ -56,10 +55,11 @@ $(document).ready(function() {
                         var firstLevelArray = this;
 
                         $.each(v.laureates, function(subk, subv) {
-                            $('#result-list').append('<tr><td>' + firstLevelArray.category +
-                                '</td><td>' + firstLevelArray.year + '</td><td>' +
-                                subv.firstname + ' ' + subv.surname +
-                                '</td><td>' + subv.motivation + '</td></tr>');
+                            $('#result-list').append('<tr><td>' +
+                                firstLevelArray.category + '</td><td>' +
+                                firstLevelArray.year + '</td><td>' +
+                                subv.firstname + ' ' + subv.surname + '</td><td>' + 
+                                subv.motivation + '</td></tr>');
                         });
                     });
                 } else {
@@ -69,28 +69,29 @@ $(document).ready(function() {
                     if (!isEmpty($('#category'))) {
                         console.log($('#category').val());
 
-                        var userInput = $('#category').val();
-                        var arrayOfCategories = JSPath.apply('.prizes.category', data);
+                        // Getting user input, converting to lower case to be
+                        // case insensitive
+                        var userInput = $('#category').val().toLowerCase();
+                        console.log(userInput);
 
-                        for (i = 0; i < arrayOfCategories.length; i++) {
-                            if (userInput === arrayOfCategories[i]) {
-                                // List all winners in that category
-                                var path = '.prizes{.category == $userInput}.year';
+                        $.each(data.prizes, function(k, v) {
+                            var firstLevelArray = this;
 
-                                var arrayOfWinners = JSPath.apply(path, data, { category: userInput });
-
-                                $('#result-list').append(
-                                    '<tr><td>' + arrayOfCategories[i] +
-                                    '</td><td>' + arrayOfWinners[0] +
-                                    '</td><td>' + arrayOfWinners + '</td><td>' + 
-                                    '</td></tr>');
+                            if (firstLevelArray.category === userInput) {
+                                $.each(v.laureates, function(subk, subv) {
+                                    $('#result-list').append('<tr><td>' +
+                                        firstLevelArray.category + '</td><td>' +
+                                        firstLevelArray.year + '</td><td>' +
+                                        subv.firstname + ' ' + subv.surname + '</td><td>' + 
+                                        subv.motivation + '</td></tr>');
+                                });
                             }
-                        }
+                        });
                     }
                 }
 
                 // Close the table
-                $('#result-list').append('</tbody></table>');
+                $('#result-list').append('</tbody>');
             }
         });
     });
