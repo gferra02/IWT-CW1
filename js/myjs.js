@@ -110,7 +110,8 @@ $(document).ready(function() {
                     if (!isEmpty($('#surname'))) {
 
                         // Using this to test if I can build a query string from all input fields
-                        var testJSP = JSPath.apply('.prizes{.year < "2000" && .category == "chemistry" && ..firstname ==* "Otto"}', data);
+                        // It works, add substitution!
+                        var testJSP = JSPath.apply('.prizes{.year < "2017" && .category == "chemistry" && ..firstname *= "otto"}', data);
 
                         $.each(testJSP, function(k, v) {
                             $.each(v.laureates, function(subk, subv) {
