@@ -102,6 +102,24 @@ $(document).ready(function() {
                         //         });
                         //     }
                     }
+
+                    if (!isEmpty($('#share'))) {
+
+                    }
+
+                    if (!isEmpty($('#surname'))) {
+                        var testJSP = JSPath.apply('.prizes{.year < "2000" && .category == "chemistry" && ..firstname ==* "Otto"}', data);
+
+                        $.each(testJSP, function(k, v) {
+                            $.each(v.laureates, function(subk, subv) {
+                                $('#result-list').append('<tr><td>' +
+                                    v.category + '</td><td>' +
+                                    v.year + '</td><td>' +
+                                    subv.firstname + '</td><td>' +
+                                    subv.surname + '</td></tr>');
+                            });
+                        });
+                    }
                 }
 
                 // Close the table
@@ -129,10 +147,10 @@ $(document).ready(function() {
 
     // Basic function to check for empty value in fields
     function isEmpty(obj) {
-        if(obj.value != '') {
-            return false;
+        if (obj.value == '') {
+            return true;
         }
 
-        return true;
+        return false;
     }
 });
