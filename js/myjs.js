@@ -104,6 +104,10 @@ $(document).ready(function() {
 
                 results(jsonQuery);
 
+                // TODO
+                // 1. Add general 'no match found' for no results in combination
+                // or with text inserted that doesn't match anything.
+
                 // Close the table
                 $('#result-list').append('</tbody>');
 
