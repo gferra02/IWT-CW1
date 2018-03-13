@@ -13,7 +13,11 @@ $(document).ready(function() {
             dataType: 'json',
 
             // TODO: REFACTOR THIS
-            success: function(data) {                
+            success: function(data) {
+
+                // I was using this to debug in the browser
+                // window.data = data;                
+                
                 $('#result-list').html('<thead><tr><th>Category</th>' +
                                        '<th>Year</th><th>Firstname</th>' +
                                        '<th>Surname</th><th>Share</th>' +
@@ -95,6 +99,7 @@ $(document).ready(function() {
                 }
 
                 jsonQuery = JSPath.apply(path, data);
+                console.log(jsonQuery);
                 console.log(path);
 
                 results(jsonQuery);
@@ -128,3 +133,4 @@ $(document).ready(function() {
         return false;
     }
 });
+
