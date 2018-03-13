@@ -16,7 +16,7 @@ $(document).ready(function() {
             success: function(data) {
 
                 // I was using this to debug in the browser
-                // window.data = data;                
+                window.data = data;                
                 
                 $('#result-list').html('<thead><tr><th>Category</th>' +
                                        '<th>Year</th><th>Firstname</th>' +
@@ -38,6 +38,7 @@ $(document).ready(function() {
 
                 // Setting up for building the query string with JSPath library
                 var path = '.prizes';
+                var subpath = '..laureates';
 
                 // 5)
                 if (empty) {
@@ -53,7 +54,7 @@ $(document).ready(function() {
                     // Getting user input, converting it to lower case to
                     // match lower and upper case
                     var userCategory = $('#category').val().toLowerCase();
-                    path += '{.category == "' + userCategory + '" }'; 
+                    path += '{.category == "' + userCategory + '"}'; 
                 }
 
                 // 2)
@@ -70,7 +71,7 @@ $(document).ready(function() {
                         userYearOperator = "==";
                     }
 
-                    path += '{.year ' + userYearOperator + ' "' + userYear + '" }';
+                    path += '{.year ' + userYearOperator + ' "' + userYear + '"}';
                 }
 
                 if (!isEmpty($('#share').val())) {
@@ -87,7 +88,7 @@ $(document).ready(function() {
                     }
 
                     // TODO: fix the fact that it returns the sibilings if any
-                    path += '{..share ' + userShareOperator + ' "' + userShare + '" }';
+                    subpath += '{.share ' + userShareOperator + ' "' + userShare + '"}';
                 }
 
                 if (!isEmpty($('#surname').val())) {
@@ -95,18 +96,27 @@ $(document).ready(function() {
 
                     // Using *= operator to find partial matches
                     // TODO: fix the fact that it returns the sibilings if any
-                    path += '{..surname *= "' + userSurname + '" }';
+                    subpath += '{.surname *= "' + userSurname + '"}';
                 }
 
                 jsonQuery = JSPath.apply(path, data);
-                console.log(jsonQuery);
-                console.log(path);
+
+                console.log('subpath: ' + subpath);
+
+                if (subpath != "..laureates") {
+                    jsonQuery = JSPath.apply(subpath, jsonQuery);
+                    console.log('subpath jsonQuery: ' + jsonQuery);
+                }
+
+                console.log('jsonQuery passed to function: ' + jsonQuery);
+                console.log('Current path: ' + path);
 
                 results(jsonQuery);
 
                 // TODO
                 // 1. Add general 'no match found' for no results in combination
                 // or with text inserted that doesn't match anything.
+                // 2. Fix subquery (inner loop)
 
                 // Close the table
                 $('#result-list').append('</tbody>');
@@ -117,7 +127,9 @@ $(document).ready(function() {
                             $('#result-list').append('<tr><td>' +
                                 v.category + '</td><td>' +
                                 v.year + '</td><td>' +
-                                // BUG: It's looping over these even when the condition is not met [group]
+                                // BUG: It's looping over these even when the
+                                // condition is not met [group]
+
                                 subv.firstname + '</td><td>' +
                                 subv.surname + '</td><td>' +
                                 subv.share + '</td></tr>');
