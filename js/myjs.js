@@ -117,7 +117,7 @@ $(document).ready(function() {
                             $('#result-list').append('<tr><td>' +
                                 v.category + '</td><td>' +
                                 v.year + '</td><td>' +
-                                // BUG: It's looping over these even when the condition is not met (eg. share)
+                                // BUG: It's looping over these even when the condition is not met [group]
                                 subv.firstname + '</td><td>' +
                                 subv.surname + '</td><td>' +
                                 subv.share + '</td></tr>');
