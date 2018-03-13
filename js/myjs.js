@@ -15,8 +15,9 @@ $(document).ready(function() {
             // TODO: REFACTOR THIS
             success: function(data) {                
                 $('#result-list').html('<thead><tr><th>Category</th>' +
-                                       '<th>Year</th><th>Firstname(s)</th>' +
-                                       '<th>Surname(s)</th></tr></thead><tbody>');
+                                       '<th>Year</th><th>Firstname</th>' +
+                                       '<th>Surname</th><th>Share</th>' +
+                                       '</tr></thead><tbody>');
 
                 // Get all results only if *every* input field is empty
                 // Setting empty to true since initially all fields will be blank
@@ -31,15 +32,11 @@ $(document).ready(function() {
                     }
                 });
 
+                // Setting up for building the query string with JSPath library
                 var path = '.prizes';
 
-                // checking the flag changes accordingly
-                // console.log(empty);
-
+                // 5)
                 if (empty) {
-                    // 5) Second part: If no conditions are entered, all prizes
-                    // and winners should be returned.
-                    // Retrieving all results if all input fields are empty
                     var jsonQuery = JSPath.apply(path, data);
                     results(jsonQuery);
                 }
@@ -47,20 +44,16 @@ $(document).ready(function() {
                 // If one or more input fields are not empty,
                 // build the query string to retrieve the relevant data.
 
-                // 1) The user should be able to enter a category value (e.g.
-                // literature) and retrieve the corresponding prize winners.
-
-                if (!isEmpty($('#category'))) {
+                // 1)
+                if (!isEmpty($('#category').val())) {
                     // Getting user input, converting it to lower case to
                     // match lower and upper case
                     var userCategory = $('#category').val().toLowerCase();
                     path += '{.category == "' + userCategory + '" }'; 
                 }
 
-                // 2) The user should be able to enter a year value (e.g.
-                // 1991) as well as an operator (<, = or >) and retrieve the
-                // prize winners for the years specified.
-                if (!isEmpty($('#year'))) {
+                // 2)
+                if (!isEmpty($('#year').val())) {
                     // Getting user input.
                     // Won't check for range nor type, since already doing it
                     // in the html form
@@ -68,71 +61,57 @@ $(document).ready(function() {
 
                     var userYearOperator = $('select#year-range option:selected').val();
 
+                    // Defaulting to === if none selected.
                     if (userYearOperator == "") {
                         userYearOperator = "==";
                     }
 
                     path += '{.year ' + userYearOperator + ' "' + userYear + '" }';
-                    console.log(path);
                 }
 
-                // path = '.prizes{.category == $userCat && .year == $userY }';
+                if (!isEmpty($('#share').val())) {
+                    // Getting user input.
+                    // Won't check for range nor type, since already doing it
+                    // in the html form
+                    var userShare = $('#share').val();
+
+                    var userShareOperator = $('select#share-range option:selected').val();
+
+                    // Defaulting to === if none selected.
+                    if (userShareOperator == "") {
+                        userShareOperator = "==";
+                    }
+
+                    // TODO: fix the fact that it returns the sibilings if any
+                    path += '{..share ' + userShareOperator + ' "' + userShare + '" }';
+                }
+
+                if (!isEmpty($('#surname').val())) {
+                    var userSurname = $('#surname').val();
+
+                    // Using *= operator to find partial matches
+                    // TODO: fix the fact that it returns the sibilings if any
+                    path += '{..surname *= "' + userSurname + '" }';
+                }
 
                 jsonQuery = JSPath.apply(path, data);
-
-                if (!isEmpty($('#share'))) {
-
-                }
-
-                if (!isEmpty($('#surname'))) {
-
-                    // Using this to test if I can build a query string from all input fields
-                    // It works, add substitution!
-                    // var testJSP = JSPath.apply('.prizes{.year < "2017" && .category == "chemistry" && ..surname *= "man"}', data);
-
-                    // $.each(testJSP, function(k, v) {
-                    //     $.each(v.laureates, function(subk, subv) {
-                    //         $('#result-list').append('<tr><td>' +
-                    //             v.category + '</td><td>' +
-                    //             v.year + '</td><td>' +
-                    //             subv.firstname + '</td><td>' +
-                    //             subv.surname + '</td></tr>');
-                    //     });
-                    // });
-                }
+                console.log(path);
 
                 results(jsonQuery);
 
                 // Close the table
                 $('#result-list').append('</tbody>');
 
-                // Function to retrieve results
-                // function filteredResults(userInput, jsonObj) {
-                //     $.each(data.prizes, function(k, v) {
-                //         var firstLevelArray = this;
-
-                //         if (firstLevelArray[jsonObj] === userInput) {
-                //             $.each(v.laureates, function(subk, subv) {
-                //                 $('#result-list').append('<tr><td>' +
-                //                     firstLevelArray.category + '</td><td>' +
-                //                     firstLevelArray.year + '</td><td>' +
-                //                     subv.firstname + '</td><td>' + 
-                //                     subv.surname + '</td></tr>');
-                //             });
-                //         }
-                //     });
-                // }
-
                 function results(jsonQuery) {
-                    var query = jsonQuery;
-
-                    $.each(query, function(k, v) {
+                    $.each(jsonQuery, function(k, v) {
                         $.each(v.laureates, function(subk, subv) {
                             $('#result-list').append('<tr><td>' +
                                 v.category + '</td><td>' +
                                 v.year + '</td><td>' +
+                                // BUG: It's looping over these even when the condition is not met (eg. share)
                                 subv.firstname + '</td><td>' +
-                                subv.surname + '</td></tr>');
+                                subv.surname + '</td><td>' +
+                                subv.share + '</td></tr>');
                         });
                     });
                 }
@@ -142,7 +121,7 @@ $(document).ready(function() {
 
     // Basic function to check for empty value in fields
     function isEmpty(obj) {
-        if (obj.value == '') {
+        if (obj == '') {
             return true;
         }
 
