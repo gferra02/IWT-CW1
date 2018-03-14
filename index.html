@@ -32,6 +32,7 @@
                         <option value=">">&gt; (greater than)</option>
                     </select> 
                     <input id="year" type="number" value="" min="1901" max="2017" placeholder="Eg. '2017'">
+                    <span id="year-error"></span>
                 </p>
                 <p>
                     <label>Prize share</label>
@@ -42,6 +43,7 @@
                         <option value=">">&gt; (greater than)</option>
                     </select> 
                     <input id="share" type="number" value="" min="1" max="4" placeholder="Eg. '2'">
+                    <span id="share-error"></span>
                 </p>
                 <p>
                     <label>Surname (whole or partial)</label>
@@ -53,7 +55,9 @@
         </div>
 
         <div id="results">
-            <h2>Results</h2>
+            <h2 id="count">
+                Results
+            </h2>
 
             <p id="warnings"></p>
 

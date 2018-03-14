@@ -89,6 +89,12 @@ ul, ol {
     text-align: justify;
 }
 
+#share-error,
+#warnings,
+#year-error {
+    color: #bb0000;
+}
+
 .wrapper {
     background: #f3f6f8;
     margin: 0 auto;
