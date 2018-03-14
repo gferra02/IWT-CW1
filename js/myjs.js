@@ -79,6 +79,7 @@ $(document).ready(function() {
                     path += '{.year ' + userYearOperator + ' "' + userYear + '"}';
                 }
 
+                // 3)
                 if (!isEmpty($('#share').val())) {
                     // Getting user input.
                     // Won't check for range nor type, since already doing it
@@ -93,27 +94,47 @@ $(document).ready(function() {
                     }
 
                     // TODO: fix the fact that it returns the sibilings if any
-                    path += '{..share ' + userShareOperator + ' "' + userShare + '"}';
-                    // subpath += '{..share ' + userShareOperator + ' "' + userShare + '"}';
+                    subpath += '{.share ' + userShareOperator + ' "' + userShare + '"}';
                 }
 
+                // 4)
                 if (!isEmpty($('#surname').val())) {
                     var userSurname = $('#surname').val();
 
                     // Using *= operator to find partial matches
                     // TODO: fix the fact that it returns the sibilings if any
-                    path += '{..surname *= "' + userSurname + '"}';
-                    // subpath += '{..share ' + userShareOperator + ' "' + userShare + '"}';
+                    subpath += '{.surname *= "' + userSurname + '"}';
                 }
 
                 jsonQuery = JSPath.apply(path, data);
 
-                // if (subpath != "..laureates") {
-                //     var subJsonQuery = JSPath.apply(subpath, jsonQuery);
-                // }
+                jsonSubQuery = JSPath.apply(subpath, jsonQuery);
 
-                results(jsonQuery);
-                console.log(path);
+                // console.log('--- Trying subquery here ---');
+                // console.log('Subpath ' + subpath);
+                // console.log('jsonSubQuery: ' + jsonSubQuery);
+
+                var store = $.each(jsonSubQuery, function(k, v) {
+                    // $.each(v.jsonSubQuery, function(subk, subv) {
+                        // can I check the condition here?
+                        
+                        $('#result-list').append('<tr><td>' +
+                            v.category + '</td><td>' +
+                            v.year + '</td><td>' +
+
+                            v.id + '</td><td>' +
+                            v.firstname + '</td><td>' +
+                            v.surname + '</td><td>' +
+                            v.share + '</td></tr>');
+                    // });
+                });
+
+                
+
+                console.log(store);
+
+                // results(jsonQuery);
+                // console.log(path);
 
                 // TODO
                 // 1. Add general 'no match found' for no results in combination
@@ -130,8 +151,6 @@ $(document).ready(function() {
                             $('#result-list').append('<tr><td>' +
                                 v.category + '</td><td>' +
                                 v.year + '</td><td>' +
-                                // BUG: It's looping over these even when the
-                                // condition is not met [group]
 
                                 subv.id + '</td><td>' +
                                 subv.firstname + '</td><td>' +
