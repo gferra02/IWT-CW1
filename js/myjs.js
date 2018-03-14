@@ -47,8 +47,8 @@ $(document).ready(function() {
 
                 // 5)
                 if (empty) {
-                    var jsonQuery = JSPath.apply(path, data);
-                    results(jsonQuery);
+                    // var jsonQuery = JSPath.apply(path, data);
+                    results();
                 }
 
                 // If one or more input fields are not empty,
@@ -93,7 +93,6 @@ $(document).ready(function() {
                         userShareOperator = "==";
                     }
 
-                    // TODO: fix the fact that it returns the sibilings if any
                     subpath += '{.share ' + userShareOperator + ' "' + userShare + '"}';
                 }
 
@@ -102,74 +101,61 @@ $(document).ready(function() {
                     var userSurname = $('#surname').val();
 
                     // Using *= operator to find partial matches
-                    // TODO: fix the fact that it returns the sibilings if any
                     subpath += '{.surname *= "' + userSurname + '"}';
                 }
 
-                jsonQuery = JSPath.apply(path, data);
+                results();
 
-                jsonSubQuery = JSPath.apply(subpath, jsonQuery);
+                console.log(results());
 
-                // console.log('--- Trying subquery here ---');
-                // console.log('Subpath ' + subpath);
-                // console.log('jsonSubQuery: ' + jsonSubQuery);
+                // $.each(JSPath.apply(path, data), function(i, prize) {
+                //     $.each(JSPath.apply(subpath, prize), function(j, laureate) {
+                //         $('#result-list').append('<tr><td>' +
+                //            prize.category + '</td><td>' +
+                //            prize.year + '</td><td>' +
 
-                var store = $.each(jsonSubQuery, function(k, v) {
-                    // $.each(v.jsonSubQuery, function(subk, subv) {
-                        // can I check the condition here?
-                        
-                        $('#result-list').append('<tr><td>' +
-                            v.category + '</td><td>' +
-                            v.year + '</td><td>' +
-
-                            v.id + '</td><td>' +
-                            v.firstname + '</td><td>' +
-                            v.surname + '</td><td>' +
-                            v.share + '</td></tr>');
-                    // });
-                });
-
-                
-
-                console.log(store);
-
-                // results(jsonQuery);
-                // console.log(path);
+                //            laureate.id + '</td><td>' +
+                //            laureate.firstname + '</td><td>' +
+                //            laureate.surname + '</td><td>' +
+                //            laureate.share + '</td></tr>'
+                //         );
+                //     });
+                // });
 
                 // TODO
                 // 1. Add general 'no match found' for no results in combination
                 // or with text inserted that doesn't match anything.
-                // 2. Fix subquery (inner loop)
 
                 // Close the table
                 $('#result-list').append('</tbody>');
 
-                function results(jsonQuery) {
-                    $.each(jsonQuery, function(k, v) {
-                        $.each(v.laureates, function(subk, subv) {
-                            // can I check the condition here?
-                            $('#result-list').append('<tr><td>' +
-                                v.category + '</td><td>' +
-                                v.year + '</td><td>' +
+                function results() {
+                    // $.each(jsonQuery, function(k, v) {
+                    //     $.each(v.laureates, function(subk, subv) {
+                    //         $('#result-list').append('<tr><td>' +
+                    //             v.category + '</td><td>' +
+                    //             v.year + '</td><td>' +
 
-                                subv.id + '</td><td>' +
-                                subv.firstname + '</td><td>' +
-                                subv.surname + '</td><td>' +
-                                subv.share + '</td></tr>');
+                    //             subv.id + '</td><td>' +
+                    //             subv.firstname + '</td><td>' +
+                    //             subv.surname + '</td><td>' +
+                    //             subv.share + '</td></tr>'
+                    //         );
+                    //     });
+                    // });
+                    $.each(JSPath.apply(path, data), function(i, prize) {
+                        $.each(JSPath.apply(subpath, prize), function(j, laureate) {
+                            $('#result-list').append('<tr><td>' +
+                               prize.category + '</td><td>' +
+                               prize.year + '</td><td>' +
+
+                               laureate.id + '</td><td>' +
+                               laureate.firstname + '</td><td>' +
+                               laureate.surname + '</td><td>' +
+                               laureate.share + '</td></tr>'
+                            );
                         });
                     });
-
-                    // $.each(jsonQuery, function(k, v) {
-                    //     $('#result-list').append('<tr><td>' +
-                    //         // category and year undefined if I'm getting laureates
-                    //         // the rest is undefined if I get prizes
-                    //         v.category + '</td><td>' +
-                    //         v.year + '</td><td>' +
-                    //         v.id + '</td><td>' +
-                    //         v.firstname + '</td><td>' +
-                    //         v.surname + '</td><td>' +
-                    //         v.share + '</td></tr>');
-                    // });
                 }
             }
         });
