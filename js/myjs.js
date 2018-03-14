@@ -19,7 +19,7 @@ $(document).ready(function() {
                 window.data = data;                
                 
                 $('#result-list').html('<thead><tr><th>Category</th>' +
-                                       '<th>Year</th><th>Firstname</th>' +
+                                       '<th>Year</th><th>ID</th><th>Firstname</th>' +
                                        '<th>Surname</th><th>Share</th>' +
                                        '</tr></thead><tbody>');
 
@@ -88,7 +88,7 @@ $(document).ready(function() {
                     }
 
                     // TODO: fix the fact that it returns the sibilings if any
-                    subpath += '{.share ' + userShareOperator + ' "' + userShare + '"}';
+                    path += '{..share ' + userShareOperator + ' "' + userShare + '"}';
                 }
 
                 if (!isEmpty($('#surname').val())) {
@@ -96,22 +96,17 @@ $(document).ready(function() {
 
                     // Using *= operator to find partial matches
                     // TODO: fix the fact that it returns the sibilings if any
-                    subpath += '{.surname *= "' + userSurname + '"}';
+                    path += '{..surname *= "' + userSurname + '"}';
                 }
 
                 jsonQuery = JSPath.apply(path, data);
 
-                console.log('subpath: ' + subpath);
-
-                if (subpath != "..laureates") {
-                    jsonQuery = JSPath.apply(subpath, jsonQuery);
-                    console.log('subpath jsonQuery: ' + jsonQuery);
-                }
-
-                console.log('jsonQuery passed to function: ' + jsonQuery);
-                console.log('Current path: ' + path);
+                // if (subpath != "..laureates") {
+                //     var jsonQuery = JSPath.apply(subpath, jsonQuery);
+                // }
 
                 results(jsonQuery);
+                console.log(path);
 
                 // TODO
                 // 1. Add general 'no match found' for no results in combination
@@ -124,17 +119,31 @@ $(document).ready(function() {
                 function results(jsonQuery) {
                     $.each(jsonQuery, function(k, v) {
                         $.each(v.laureates, function(subk, subv) {
+                            // can I check the condition here?
                             $('#result-list').append('<tr><td>' +
                                 v.category + '</td><td>' +
                                 v.year + '</td><td>' +
                                 // BUG: It's looping over these even when the
                                 // condition is not met [group]
 
+                                subv.id + '</td><td>' +
                                 subv.firstname + '</td><td>' +
                                 subv.surname + '</td><td>' +
                                 subv.share + '</td></tr>');
                         });
                     });
+
+                    // $.each(jsonQuery, function(k, v) {
+                    //     $('#result-list').append('<tr><td>' +
+                    //         // category and year undefined if I'm getting laureates
+                    //         // the rest is undefined if I get prizes
+                    //         v.category + '</td><td>' +
+                    //         v.year + '</td><td>' +
+                    //         v.id + '</td><td>' +
+                    //         v.firstname + '</td><td>' +
+                    //         v.surname + '</td><td>' +
+                    //         v.share + '</td></tr>');
+                    // });
                 }
             }
         });
