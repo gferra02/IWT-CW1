@@ -7,6 +7,11 @@ $(document).ready(function() {
         var results = $('#result-list');
         results.text('Loading results...');
 
+        // Smooth scroll to results once hitting the 'Search' button
+        $('html, body').animate({
+            scrollTop: $("#results").offset().top
+        }, 500);
+
         $.ajax({
             type: 'GET',
             url: 'nobel.json',
@@ -89,6 +94,7 @@ $(document).ready(function() {
 
                     // TODO: fix the fact that it returns the sibilings if any
                     path += '{..share ' + userShareOperator + ' "' + userShare + '"}';
+                    // subpath += '{..share ' + userShareOperator + ' "' + userShare + '"}';
                 }
 
                 if (!isEmpty($('#surname').val())) {
@@ -97,12 +103,13 @@ $(document).ready(function() {
                     // Using *= operator to find partial matches
                     // TODO: fix the fact that it returns the sibilings if any
                     path += '{..surname *= "' + userSurname + '"}';
+                    // subpath += '{..share ' + userShareOperator + ' "' + userShare + '"}';
                 }
 
                 jsonQuery = JSPath.apply(path, data);
 
                 // if (subpath != "..laureates") {
-                //     var jsonQuery = JSPath.apply(subpath, jsonQuery);
+                //     var subJsonQuery = JSPath.apply(subpath, jsonQuery);
                 // }
 
                 results(jsonQuery);
