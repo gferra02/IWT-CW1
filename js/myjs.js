@@ -53,12 +53,6 @@ $(document).ready(function() {
                     }
 
                     path += '{.year ' + userYearOperator + ' "' + userYear + '"}';
-
-                    if (userYear < 1901 || userYear > 2017) {
-                        $('#year-error').html('Valid years between 1901 and 2017');
-                    } else {
-                        $('#year-error').empty();
-                    }
                 }
 
                 // 3)
@@ -76,12 +70,6 @@ $(document).ready(function() {
                     }
 
                     subpath += '{.share ' + userShareOperator + ' "' + userShare + '"}';
-
-                    if (userShare > 4 || userShare < 1) {
-                        $('#share-error').html('<p>Valid share input: 1 to 4</p>');
-                    } else {
-                        $('#share-error').empty();
-                    }
                 }
 
                 // 4)
