@@ -35,7 +35,7 @@ $(document).ready(function() {
                     // Getting user input, converting it to lower case to
                     // match lower and upper case
                     var userCategory = $('#category').val().toLowerCase();
-                    path += '{.category == "' + userCategory + '"}'; 
+                    path += '{.category === "' + userCategory + '"}'; 
                 }
 
                 // 2)
@@ -49,7 +49,7 @@ $(document).ready(function() {
 
                     // Defaulting to === if none selected.
                     if (userYearOperator == "") {
-                        userYearOperator = "==";
+                        userYearOperator = "===";
                     }
 
                     path += '{.year ' + userYearOperator + ' "' + userYear + '"}';
@@ -66,7 +66,7 @@ $(document).ready(function() {
 
                     // Defaulting to === if none selected.
                     if (userShareOperator == "") {
-                        userShareOperator = "==";
+                        userShareOperator = "===";
                     }
 
                     subpath += '{.share ' + userShareOperator + ' "' + userShare + '"}';
@@ -80,6 +80,7 @@ $(document).ready(function() {
                     subpath += '{.surname *= "' + userSurname + '"}';
                 }
                 
+                // Finally display the results
                 results();
                 
                 // If no results are found, display a message
