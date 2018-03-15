@@ -14,9 +14,17 @@ body {
 }
 
 button {
+    cursor: pointer;
+}
+
+.reset {
+    border: 1px solid #7ca5b8;
+    color: #7ca5b8;
+}
+
+.submit {
     background: #7ca5b8;
     color: #fff;
-    cursor: pointer;
 }
 
 button:hover {

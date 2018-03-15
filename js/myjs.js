@@ -83,9 +83,9 @@ $(document).ready(function() {
                 results();
                 
                 if (count == 0) {
-                    $('#warnings').append('<p>No match found</p>');
+                    $('#warnings').html('<p>No match found</p>');
                 } else {
-                    $('#warnings').html('');
+                    $('#warnings').empty();
                 }
 
                 // Close the table
