@@ -82,19 +82,19 @@ $(document).ready(function() {
                 
                 results();
                 
+                // If no results are found, display a message
                 if (count == 0) {
                     $('#warnings').html('<p>No match found</p>');
                 } else {
                     $('#warnings').empty();
                 }
 
-                // Close the table
+                // Close the results table
                 $('#result-list').append('</tbody>');
 
-                // Adding results count
+                // Display number of results
                 $('#count').html('Results: <small><strong>' +
                     count + '</strong> found</small>');
-
 
                 // 5)
                 // This function returns everything if all fields are empty, or
