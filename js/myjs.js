@@ -52,6 +52,16 @@ $(document).ready(function() {
                         userYearOperator = "===";
                     }
 
+                    // Checking that the value of the year is within the range
+                    // of the data, if not, suggesting the use of < > operators.
+                    if (userYearOperator === "===" && (userYear < 1901 || userYear > 2017)) {
+                        $('#year-error').html('Year range is 1901 to 2017.<br>' +
+                            'Please enter a different year or consider using ' +
+                            '> < operators.');
+                    } else {
+                        $('#year-error').empty();
+                    }
+
                     path += '{.year ' + userYearOperator + ' "' + userYear + '"}';
                 }
 
@@ -61,12 +71,23 @@ $(document).ready(function() {
                     // Won't check for range nor type, since already doing it
                     // in the html form
                     var userShare = $('#share').val();
+                    console.log('userShare: ' + userShare);
 
                     var userShareOperator = $('select#share-range option:selected').val();
 
                     // Defaulting to === if none selected.
                     if (userShareOperator == "") {
                         userShareOperator = "===";
+                    }
+
+                    // Checking that the value of share is within the range
+                    // of the data, if not, suggesting the use of < > operators.
+                    if (userShareOperator === "===" && (userShare < 1 || userShare > 4)) {
+                        $('#share-error').html('Share range is 1 to 4.<br>' +
+                            'Please enter a different number or consider using ' +
+                            '> < operators.');
+                    } else {
+                        $('#share-error').empty();
                     }
 
                     subpath += '{.share ' + userShareOperator + ' "' + userShare + '"}';

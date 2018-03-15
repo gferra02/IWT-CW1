@@ -16,8 +16,11 @@
             <small>IWT Coursework 1 - Ginestra Ferraro</small>
         </h1>
 
+        <p>I confirm that this coursework submission is entirely my own work, except where explicitly stated otherwise.</p>
+
         <div id="search">
             <h2>Search the nobel prizes winners</h2>
+            <p><em>Hit 'Search' on an empty form to get all records displayed.</em></p>
             <form id="query">
                 <p>
                     <label>Category</label>
@@ -32,6 +35,7 @@
                         <option value=">">&gt; (greater than)</option>
                     </select> 
                     <input id="year" type="number" value="" min="1901" max="2017" placeholder="Eg. '2017'">
+                    <span id="year-error"></span>
                 </p>
                 <p>
                     <label>Prize share</label>
@@ -42,6 +46,7 @@
                         <option value=">">&gt; (greater than)</option>
                     </select> 
                     <input id="share" type="number" value="" min="1" max="4" placeholder="Eg. '2'">
+                    <span id="share-error"></span>
                 </p>
                 <p>
                     <label>Surname (whole or partial)</label>
