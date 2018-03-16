@@ -104,7 +104,7 @@ $(document).ready(function() {
                 // Finally display the results
                 results();
                 
-                // If no results are found, display a message
+                // If no results are found, display the message 'No match found'
                 if (count == 0) {
                     $('#warnings').html('<p>No match found</p>');
                 } else {
@@ -134,6 +134,7 @@ $(document).ready(function() {
                                laureate.share + '</td></tr>'
                             );
 
+                            // Counting table rows to find out how many results
                             count++;
                         });
                     });
