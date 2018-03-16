@@ -19,12 +19,12 @@
         <p>I confirm that this coursework submission is entirely my own work, except where explicitly stated otherwise.</p>
 
         <div id="search">
-            <h2>Search the nobel prizes winners</h2>
+            <h2>Search nobel prize winners</h2>
             <p><em>Hit 'Search' on an empty form to get all records displayed.</em></p>
             <form id="query">
                 <p>
                     <label>Category</label>
-                    <input id="category" type="text" value="" placeholder="Start typing...">
+                    <input id="category" type="text" value="" placeholder="Eg. Literature">
                 </p>
                 <p>
                     <label>Year</label>
@@ -34,7 +34,7 @@
                         <option value="==">= (equal to)</option>
                         <option value=">">&gt; (greater than)</option>
                     </select> 
-                    <input id="year" type="number" value="" min="1901" max="2017" placeholder="Eg. '2017'">
+                    <input id="year" type="number" value="" min="1901" max="2017" placeholder="Eg. 2017">
                     <span id="year-error"></span>
                 </p>
                 <p>
@@ -45,7 +45,7 @@
                         <option value="==">= (equal to)</option>
                         <option value=">">&gt; (greater than)</option>
                     </select> 
-                    <input id="share" type="number" value="" min="1" max="4" placeholder="Eg. '2'">
+                    <input id="share" type="number" value="" min="1" max="4" placeholder="Eg. 2">
                     <span id="share-error"></span>
                 </p>
                 <p>
@@ -66,6 +66,7 @@
             <p id="warnings"></p>
 
             <table id="result-list">
+                <tr><td colspan="4">Enter search terms in the form, or hit 'Search' to see all records and start exploring the data.</td></tr>
             </table>
         </div>
 
